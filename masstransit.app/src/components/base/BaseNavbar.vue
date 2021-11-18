@@ -59,10 +59,8 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
             <a v-if="hasLogin" class="button is-light"> Log in </a>
+            <a v-if="hasInfo" class="button is-light"> About </a>
           </div>
         </div>
       </div>
@@ -94,6 +92,13 @@ export default {
         return false;
       },
     },
+    hasInfo: {
+      type: Boolean,
+      required: false,
+      default() {
+        return false;
+      },
+    },
   },
   methods: {
     launchAbout() {
@@ -111,6 +116,7 @@ export default {
   margin-left: 3rem;
   letter-spacing: 0.15em;
   font-weight: 500;
+  font-family: $app-font;
 }
 
 .brand-subtitle {

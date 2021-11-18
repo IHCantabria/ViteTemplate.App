@@ -9,8 +9,12 @@
   "dependencies": {
     "@mdi/font": "^6.5.95",
     "bulma": "^0.9.3",
+    "leaflet": "^1.7.1",
+    "leaflet-defaulticon-compatibility": "^0.1.1",
+    "leaflet-draw": "^1.0.4",
     "sass": "^1.43.4",
-    "vue": "^3.2.16"
+    "vue": "^3.2.16",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@originjs/vite-plugin-global-style": "^1.0.2",

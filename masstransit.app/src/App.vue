@@ -1,7 +1,6 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from "./components/HelloWorld.vue";
 import TheNavBar from "./components/layout/TheNavBar.vue";
 </script>
 
@@ -11,14 +10,14 @@ import TheNavBar from "./components/layout/TheNavBar.vue";
       <TheNavBar />
     </header>
     <main>
-      <HelloWorld msg="Hello Vue 3 + Vite" />
+      <router-view />
     </main>
   </div>
 </template>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $app-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -29,7 +28,7 @@ import TheNavBar from "./components/layout/TheNavBar.vue";
 .grid {
   display: grid;
   position: relative;
-  grid-template-rows: 20vh 1fr;
+  grid-template-rows: $height-header 1fr;
   grid-template-columns: 1fr;
   grid-row-gap: 0;
   height: 100vh;

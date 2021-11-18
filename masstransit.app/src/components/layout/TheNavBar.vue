@@ -1,5 +1,9 @@
 <template>
-  <base-navbar :brandLogo="navbarLogoPath" :title="navbarTitle" :items="navbarItems" />
+  <base-navbar
+    :brandLogo="navbarLogoPath"
+    :title="navbarTitle"
+    :items="navbarItems"
+  />
 </template>
 <script>
 import BaseNavbar from "../base/BaseNavbar.vue";
@@ -12,10 +16,11 @@ export default {
           name: "questionnaire",
           alias: "Questionnaire",
           path: "/questionnaire",
+          subitems: [],
         },
       ],
       navbarLogoPath: "src/assets/logos/Logo_IFC_Blanco_2.png",
-      navbarTitle: "Mass Transit"
+      navbarTitle: "Mass Transit",
     };
   },
   methods: {
