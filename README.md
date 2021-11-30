@@ -1,3 +1,35 @@
+# Template setup
+
+## Template cloning
+
+Use [Degit](https://github.com/Rich-Harris/degit) to copy the app template locally.
+
+Degit makes a copy of a git repository without downloading the entire git history.
+
+```
+npx degit IHCantabria/ViteTemplate.App local-repo-name
+```
+
+## Template setup
+
+Install project dependencies locally
+
+```
+npm install
+```
+
+Additionally, you might want to install: 
+
+- [bulma](https://github.com/jgthms/bulma)
+- [vuex](https://github.com/vuejs/vuex/tree/4.0)
+- [vue-router](https://github.com/vuejs/vue-router-next)
+
+## Additional setup
+
+- Folder named "certificate" with local certificates for https local server
+
+# Project README
+
 # Project Title
 
 > Project Title
