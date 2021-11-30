@@ -1,0 +1,30 @@
+{
+  "name": "vite-template",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "serve": "vite preview --port 8080",
+    "deploy-patch": "npm version patch -m v%s",
+    "deploy-minor": "npm version minor -m v%s",
+    "deploy-major": "npm version major -m v%s",
+    "version": "npm run build && git add -A",
+    "postversion": "git push origin main && git push origin --tags"
+  },
+  "dependencies": {
+    "vue": "^3.2.16"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.0.10",
+    "@originjs/vite-plugin-global-style": "^1.0.2",
+    "@vitejs/plugin-vue": "^1.9.3",
+    "eslint": "^8.2.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "prettier": "^2.4.1",
+    "sass": "^1.43.4",
+    "vite": "^2.6.4",
+    "vite-plugin-linter": "^1.0.1"
+  }
+}

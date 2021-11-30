@@ -1,0 +1,48 @@
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+a {
+  color: $app-font-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+/* Modals style */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.version {
+  font-size: 0.6rem;
+}
+
+/* Select style */
+
+.select {
+  color: $app-font-color;
+  font-family: $app-font;
+  font-size: 0.9rem;
+  outline: 0;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid $secondary-color;
+  padding: 0 0;
+}

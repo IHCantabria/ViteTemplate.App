@@ -1,0 +1,58 @@
+# Project Title
+
+> Project Title
+> Project description [Project Name](project url)
+
+## Project setup
+
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```
+npm run dev
+```
+
+### Compiles and minifies for production
+
+```
+npm run build
+```
+
+### Deploy version (patch/minor/major)
+
+```
+npm run deploy-patch
+```
+
+### Push to remote repo (master + tags)
+
+```
+npm run postversion
+```
+
+## Built With
+
+- [Vue](https://vuejs.org/) - The progressive javascript framework
+- [Vite](https://vitejs.dev/) - Frontend Tooling
+- [Rollup](https://www.rollupjs.org/guide/en/) - Bundling
+
+## Credits
+
+[IH Cantabria](https://github.com/IHCantabria)
+
+## License
+
+This software use:
+
+- [Bulma](https://bulma.io/) - MIT License
+- [Leaflet](https://leafletjs.com/) - Branded License
+- [Thredds Data Server](https://www.unidata.ucar.edu/software/tds/current/) - BSD-3 license
+
+  <a href="https://www.unidata.ucar.edu/software/tds/" title="THREDDS Data Server"><img src="https://unidata.ucar.edu/images/logos/badges/badge_tds_100.jpg" width="100px"></a>
+
+### Customize configuration
+
+See [Configuration Reference](https://vitejs.dev/config/).
