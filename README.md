@@ -53,6 +53,12 @@ npm run dev
 npm run build
 ```
 
+### Preview production version locally
+
+```
+npm run serve
+```
+
 ### Deploy version (patch/minor/major)
 
 ```
