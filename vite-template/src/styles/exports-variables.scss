@@ -1,8 +1,0 @@
-@import "variables";
-/** Export scss variables to js vars **/
-:export {
-  primaryColor: $primary-color;
-  primaryColorDark: $primary-color-dark;
-  primaryColorLight: $primary-color-light;
-  secondaryColor:$secondary-color;
-}
