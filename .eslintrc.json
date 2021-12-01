@@ -11,9 +11,9 @@
   },
   "plugins": ["vue"],
   "rules": {
-    "indent": ["warn", "tab"],
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"],
+    "indent": ["off", "tab"],
+    "quotes": ["warn", "double"],
+    "semi": ["warn", "always"],
     "vue/no-useless-template-attributes": ["off"]
   },
   "globals": {
