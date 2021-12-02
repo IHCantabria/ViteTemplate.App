@@ -18,7 +18,7 @@ Install project dependencies locally
 npm install
 ```
 
-Additionally, you might want to install: 
+Additionally, you might want to install:
 
 - [bulma](https://github.com/jgthms/bulma)
 - [vuex](https://github.com/vuejs/vuex/tree/4.0)
@@ -83,7 +83,7 @@ npm run postversion
 
 ## License
 
-This software use:
+This software uses:
 
 - [Bulma](https://bulma.io/) - MIT License
 - [Leaflet](https://leafletjs.com/) - Branded License
