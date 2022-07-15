@@ -1,3 +1,5 @@
+@use "../variables/" as app-variables;
+
 /* Hide scrollbar for IE, Edge and Firefox */
 html {
   -ms-overflow-style: none; /* IE and Edge */
@@ -10,10 +12,10 @@ html::-webkit-scrollbar {
 }
 
 a {
-  color: $app-font-color;
+  color: app-variables.$app-font-color;
 
   &:hover {
-    color: $primary-color;
+    color: app-variables.$primary-color;
   }
 }
 
@@ -36,13 +38,13 @@ a {
 /* Select style */
 
 .select {
-  color: $app-font-color;
-  font-family: $app-font;
+  color: app-variables.$app-font-color;
+  font-family: app-variables.$app-font;
   font-size: 0.9rem;
   outline: 0;
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  border-bottom: 1px solid $secondary-color;
-  padding: 0 0;
+  border-bottom: 1px solid app-variables.$secondary-color;
+  padding: 0;
 }
