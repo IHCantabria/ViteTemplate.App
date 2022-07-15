@@ -4,22 +4,71 @@
     "node": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:vue/vue3-strongly-recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "plugin:promise/recommended",
+    "plugin:import/recommended",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
   },
   "plugins": ["vue"],
   "rules": {
-    "indent": ["off", "tab"],
+    "indent": ["error", 2], //prettier indent configuration
     "quotes": ["warn", "double"],
     "semi": ["warn", "always"],
-    "vue/no-useless-template-attributes": ["off"]
+    "prefer-const": ["error", { "destructuring": "any" }],
+    "vue/require-name-property": 2,
+    "vue/match-component-file-name": [
+      "error",
+      {
+        "extensions": ["js", "vue"],
+        "shouldMatchCase": true
+      }
+    ],
+    "no-var": 2
   },
   "globals": {
     "L": true, //Leaflet instance
     "zingchart": true, //Zingcharts instance
     "defineComponent": true, //Vue defineComponent method
-    "defineProps": true //Vue method
+    "defineProps": true, //Vue method,
+    "__APP_VERSION__": "readonly" //App version variable
+  },
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "parser": "@html-eslint/parser",
+      "plugins": ["@html-eslint"],
+      "extends": ["plugin:@html-eslint/recommended"],
+      "rules": {
+        "@html-eslint/no-extra-spacing-attrs": "off",
+        "@html-eslint/indent": ["error", 2], //prettier indent configuration
+        "@html-eslint/require-closing-tags": [
+          "error",
+          {
+            "selfClosing": "always"
+          }
+        ],
+        "prettier/prettier": [
+          //make prettier use html parser with the html
+          "error",
+          {
+            "parser": "html"
+          }
+        ]
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["@", "./src"],
+        ["~", "./src"]
+      ]
+    }
   }
 }
