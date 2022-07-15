@@ -71,6 +71,30 @@ npm run deploy-patch
 npm run postversion
 ```
 
+### Analyze code with linter tools, autofix if it's available
+
+```
+npm run lint
+```
+
+### Check if the linter rules are compatible
+
+```
+npm run stylelint-check
+```
+
+### Launch test ui tool
+
+```
+npm run test
+```
+
+### Launch coverage code tool
+
+```
+npm run coverage
+```
+
 ## Built With
 
 - [Vue](https://vuejs.org/) - The progressive javascript framework
