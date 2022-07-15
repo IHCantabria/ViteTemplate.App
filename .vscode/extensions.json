@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig", // EditorConfig for VS Code - EditorConfig Support for Visual Studio Code
+    "Vue.volar", //High-performance tooling for Vue
+    "stylelint.vscode-stylelint", // Stylelint - Modern CSS/SCSS/Less linter
+    "dbaeumer.vscode-eslint", // ESLint - Integrates ESLint JavaScript into VS Code.
+    "esbenp.prettier-vscode", // Prettier - Code formatter - Code formatter using prettier
+    "wayou.vscode-todo-highlight", //TODO Highlight - highlight TODOs, FIXMEs, and any keywords, annotations...
+    "gruntfuggly.todo-tree" //Todo Tree - Show TODO, FIXME, etc. comment tags in a tree view
+  ]
+}
