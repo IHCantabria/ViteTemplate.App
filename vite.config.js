@@ -1,26 +1,51 @@
+import { fileURLToPath, URL } from "url";
 import { defineConfig } from "vite";
-import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
-import globalStyle from "@originjs/vite-plugin-global-style";
-
+import viteCompression from "vite-plugin-compression";
+const zlib = require("zlib");
 const fs = require("fs");
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   //Workaround for building environments
-  var dist;
-  if (mode === "production") {
-    dist = "dist/prod/";
-  } else {
-    dist = "dist/dev/";
-  }
-
+  const dist = mode === "production" ? "dist/prod/" : "dist/dev/";
   return {
-    plugins: [vue(), globalStyle({ sourcePath: "src/styles" })],
+    plugins: [
+      vue(),
+      viteCompression({
+        filter: new RegExp("\\.(js|json|css|html|svg)$", "i"),
+        threshold: 10240,
+        algorithm: "brotliCompress",
+        ext: ".br",
+        compressionOptions: {
+          params: {
+            [zlib.constants.BROTLI_PARAM_QUALITY]:
+              zlib.constants.BROTLI_MAX_QUALITY,
+            [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
+          },
+        },
+        deleteOriginFile: false,
+      }),
+      viteCompression({
+        filter: new RegExp("\\.(js|json|css|html)$", "i"),
+        threshold: 10240,
+        algorithm: "gzip",
+        ext: ".gz",
+        compressionOptions: {
+          level: zlib.constants.Z_BEST_COMPRESSION,
+        },
+        deleteOriginFile: false,
+      }),
+    ],
+    define: {
+      __APP_VERSION__: JSON.stringify(require("./package.json").version),
+    },
     resolve: {
       alias: {
-        "@": resolve(__dirname, "./src"),
-        "~": resolve(__dirname, "src"),
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "~": fileURLToPath(new URL("src", import.meta.url)),
+        //Example alias bulma sass
+        bulma: "bulma/bulma.sass",
       },
     },
     server: {
@@ -40,6 +65,25 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: dist,
+      reportCompressedSize: false,
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: "@use '@/styles/variables' as app-variables;",
+        },
+      },
+      modules: {
+        scopeBehaviour: "global",
+      },
+    },
+    test: {
+      include: ["__tests__/**/*.test.js"],
+      environment: "jsdom",
+      globals: true,
+      deps: {
+        inline: ["@vue"],
+      },
     },
   };
 });
