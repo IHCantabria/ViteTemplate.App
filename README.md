@@ -27,6 +27,7 @@ Additionally, you might want to install:
 ## Additional setup
 
 - Folder named "certificate" with local certificates for https local server
+- Make sure you are using a compatible Node.js version (Node.js 14.18+ / 16+)
 
 # Project README
 
