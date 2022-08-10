@@ -1,4 +1,4 @@
-@use "../variables/" as app-variables;
+@use "../variables" as app-variables;
 @forward "bulma" with (
   $primary: app-variables.$primary-color,
   $primary-light: app-variables.$primary-color-light,
