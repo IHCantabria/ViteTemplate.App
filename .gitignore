@@ -1,20 +1,18 @@
-# Logs
-logs
-*.log
-
 # local files
 *.local
 
 # /node_modules
 node_modules
 
-# local certificates
+# Coverage files
 coverage
 
-# Coverage files
+# local certificates
 certificate
 
 # Log files
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
