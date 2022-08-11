@@ -17,7 +17,15 @@
   },
   "plugins": ["vue"],
   "rules": {
-    "indent": ["error", 2], //prettier indent configuration
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "offsetTernaryExpressions": true,
+        "ignoredNodes": ["ConditionalExpression > CallExpression"]
+      }
+    ], //prettier indent configuration
     "quotes": ["warn", "double"],
     "semi": ["warn", "always"],
     "prefer-const": ["error", { "destructuring": "any" }],
