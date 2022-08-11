@@ -15,7 +15,7 @@
     "postversion": "git push origin main && git push origin --tags",
     "lint": "npm run lint:code && npm run lint:style",
     "lint:style": "stylelint src/**/*.{vue,htm,html,css,sss,less,scss} --fix",
-    "lint:code": "eslint --fix",
+    "lint:code": "eslint src/**/*.{vue,htm,html,js,json} --fix",
     "stylelint-check": "stylelint-config-prettier-scss-check",
     "test": "vitest --ui",
     "coverage": "vitest run --coverage"
