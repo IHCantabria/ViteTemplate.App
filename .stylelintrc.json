@@ -11,7 +11,7 @@
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoClasses": ["global", "export", "import", "local"]
+        "ignorePseudoClasses": ["global", "export", "import", "local", "deep"]
       }
     ],
     "selector-pseudo-element-no-unknown": [
