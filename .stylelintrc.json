@@ -14,12 +14,6 @@
         "ignorePseudoClasses": ["global", "export", "import", "local", "deep"]
       }
     ],
-    "selector-pseudo-element-no-unknown": [
-      true,
-      {
-        "ignorePseudoElements": ["v-deep"]
-      }
-    ],
     "block-no-empty": null,
     "declaration-no-important": true,
     "unit-allowed-list": [
