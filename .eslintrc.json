@@ -23,7 +23,10 @@
       {
         "SwitchCase": 1,
         "offsetTernaryExpressions": true,
-        "ignoredNodes": ["ConditionalExpression > CallExpression"]
+        "ignoredNodes": [
+          "ConditionalExpression > CallExpression",
+          "ConditionalExpression > CallExpression > *"
+        ]
       }
     ], //prettier indent configuration
     "quotes": ["warn", "double"],
