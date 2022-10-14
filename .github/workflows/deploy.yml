@@ -1,0 +1,82 @@
+name: GitHub Deploy
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+      
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    outputs:
+      project-name: ${{ steps.package-info.outputs.name }}
+      output-tag: ${{ steps.latest-tag.outputs.tag }}
+      current-version: ${{ steps.package-info.outputs.version }}
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Build project
+        run: npm run build
+
+      - name: Search latest tag
+        id: latest-tag
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: ${{ github.repository }}
+          
+      - name: Get Package Info Version
+        id: package-info
+        uses: codex-team/action-nodejs-package-info@v1
+      
+      - name: Create Dist folder
+        run: mkdir dist
+
+      - name: Zip Build DEV
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: ../../dist/${{ steps.package-info.outputs.name }}-v${{ steps.package-info.outputs.version }}-DEV.zip
+          directory: 'build/dev'
+          
+      - name: Zip Build PROD
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: ../../dist/${{ steps.package-info.outputs.name }}-v${{ steps.package-info.outputs.version }}-PROD.zip
+          directory: 'build/prod'
+
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist
+          retention-days: 1
+          
+  deploy:
+    name: Deploy
+    needs: Build
+    runs-on: ubuntu-latest
+    if: format('refs/tags/{0}', needs.Build.outputs.output-tag) == github.ref
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with: 
+          name: dist-files
+          path: dist
+        
+      - name: Release  
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/${{ needs.Build.outputs.project-name }}-v${{ needs.Build.outputs.current-version }}-DEV.zip
+            dist/${{ needs.Build.outputs.project-name }}-v${{ needs.Build.outputs.current-version }}-PROD.zip

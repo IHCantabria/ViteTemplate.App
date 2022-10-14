@@ -4,7 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import viteCompression from "vite-plugin-compression";
 import dns from "dns";
 const zlib = require("zlib");
-const fs = require("fs");
+// const fs = require("fs");
 
 // Localhost instead of ip 127.0.0.1
 dns.setDefaultResultOrder("verbatim");
@@ -12,7 +12,7 @@ dns.setDefaultResultOrder("verbatim");
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   //Workaround for building environments
-  const dist = mode === "production" ? "dist/prod/" : "dist/dev/";
+  const dist = mode === "production" ? "build/prod/" : "build/dev/";
   return {
     plugins: [
       vue(),
@@ -56,11 +56,12 @@ export default defineConfig(({ mode }) => {
       port: 8080,
       // Exits if port is already in use
       strictPort: true,
+      // Uncomment for LOCAL DEVELOPMENT only to be able to use https with certificate in localhost.
       // Https configuration, default is false
-      https: {
-        key: fs.readFileSync("./certificate/localhost-key.pem"),
-        cert: fs.readFileSync("./certificate/localhost.pem"),
-      },
+      // https: {
+      //   key: fs.readFileSync("./certificate/localhost-key.pem"),
+      //   cert: fs.readFileSync("./certificate/localhost.pem"),
+      // },
     },
     preview: {
       port: 8080,
