@@ -8,10 +8,7 @@
 
 ## App Template
 
-    - Api
-    - Website
-    - Tasks
-    - Data Server
+    - Release
 
 ## System
 
@@ -39,8 +36,7 @@ _Development_
 
 ## Distribution
 
-    - Master
-    - Tag
+    - Release
 
 ## Settings site
 
@@ -105,9 +101,7 @@ Select only if needed:
 
 **Do you need any other configuration?**
 
-- [ ] `_______________________________________________________________________________`
-- [ ] `_______________________________________________________________________________`
-- [ ] `_______________________________________________________________________________`
+- Descargar Release: https://api.github.com/repos/IHCantabria/app_name/releases/tags/app_name-{{ version }}-{{ entorno }}.zip
 
 <br>
 
@@ -123,4 +117,4 @@ Select only if needed:
 
 ## FAQ
 
-- Document provided by the system administrators [David del Prado](https://ihcantabria.com/directorio-personal/tecnologo/david-del-prado-secadas/) y [Gloria Zamora](https://ihcantabria.com/directorio-personal/tecnologo/gloria-zamora/)
+- Document provided by the system administrators [David del Prado](https://ihcantabria.com/directorio-personal/david-del-prado-secadas/), [Gloria Zamora](https://ihcantabria.com/directorio-personal/gloria-zamora/) y [Luis Gutierrez](https://ihcantabria.com/directorio-personal/luis-gutierrez/)
