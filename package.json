@@ -1,6 +1,7 @@
 {
   "name": "vite-template",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "npm run build:dev && npm run build:prod",
