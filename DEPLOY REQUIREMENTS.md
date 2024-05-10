@@ -118,4 +118,4 @@ Select only if needed:
 
 ## FAQ
 
-- Document provided by the system administrators [David del Prado](https://ihcantabria.com/directorio-personal/david-del-prado-secadas/), [Gloria Zamora](https://ihcantabria.com/directorio-personal/gloria-zamora/) y [Luis Gutierrez](https://ihcantabria.com/directorio-personal/luis-gutierrez/)
+- Document provided by the system administrators [David del Prado](https://ihcantabria.com/directorio-personal/david-del-prado-secadas/) y [Luis Gutierrez](https://ihcantabria.com/directorio-personal/luis-gutierrez/)
