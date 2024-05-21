@@ -8,9 +8,10 @@
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "serve": "vite preview --port 8080",
-    "deploy-patch": "npm version patch -m v%%s",
-    "deploy-minor": "npm version minor -m v%%s",
-    "deploy-major": "npm version major -m v%%s",
+    "serve:dev": "vite preview --port 8080 --mode development",
+    "deploy-patch": "npm version patch -m v%s",
+    "deploy-minor": "npm version minor -m v%s",
+    "deploy-major": "npm version major -m v%s",
     "preversion": "npm run lint",
     "version": "git add -A",
     "postversion": "git push origin main && git push origin --tags",
@@ -22,8 +23,7 @@
     "coverage": "vitest run --coverage"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "vue": "^3.4.15"
@@ -52,9 +52,7 @@
     "stylelint-config-standard-scss": "^4.0.0",
     "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-prettier": "^2.0.0",
-    "vite": "^5.0.12",
-    "vite-plugin-compression": "^0.5.1",
-    "vitest": "^1.2.2",
-    "zlib": "^1.0.5"
+    "vite": "^5.2.11",
+    "vite-plugin-compression": "^0.5.1"
   }
 }
