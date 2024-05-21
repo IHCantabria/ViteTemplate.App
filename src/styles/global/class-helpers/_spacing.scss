@@ -1,0 +1,71 @@
+/* Definition of classes for spacing */
+
+/* Sizes */
+$margin-paddings-sizes: (
+  "-0": 0,
+  "-1": 0.25rem,
+  "-2": 0.5rem,
+  "-3": 1rem,
+  "-4": 1.5rem,
+  "-5": 2rem,
+  "-6": 3rem,
+  "-7": 4rem,
+  "-8": 5rem,
+  "-9": 6rem,
+  "-10": 10rem,
+  "-auto": auto,
+);
+
+/* Margin classes */
+@each $size, $value in $margin-paddings-sizes {
+  .m#{$size} {
+    margin: $value;
+  }
+  .mt#{$size} {
+    margin-top: $value;
+  }
+  .mr#{$size} {
+    margin-right: $value;
+  }
+  .mb#{$size} {
+    margin-bottom: $value;
+  }
+  .ml#{$size} {
+    margin-left: $value;
+  }
+  .mx#{$size} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+  .my#{$size} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+}
+
+/* Padding classes */
+@each $size, $value in $margin-paddings-sizes {
+  .p#{$size} {
+    padding: $value;
+  }
+  .pt#{$size} {
+    padding-top: $value;
+  }
+  .pr#{$size} {
+    padding-right: $value;
+  }
+  .pb#{$size} {
+    padding-bottom: $value;
+  }
+  .pl#{$size} {
+    padding-left: $value;
+  }
+  .px#{$size} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+  .py#{$size} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+}

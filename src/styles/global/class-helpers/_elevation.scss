@@ -1,0 +1,36 @@
+/* Definition of classes for elevations */
+
+/* Distance between the surface and the bottom of the elevation */
+$elevation-depth: 0.2rem;
+
+/* Elevation classes */
+@for $i from 1 through 24 {
+  .elevation-#{$i} {
+    box-shadow: 0
+      #{$i *
+      $elevation-depth}
+      #{$i *
+      $elevation-depth}
+      rgb(0 0 0 / 14%);
+  }
+  .elevation-l-#{$i} {
+    box-shadow: -#{$i *
+      $elevation-depth *
+      0.75}
+      #{$i *
+      $elevation-depth}
+      #{$i *
+      $elevation-depth}
+      rgb(0 0 0 / 14%);
+  }
+  .elevation-r-#{$i} {
+    box-shadow: #{$i *
+      $elevation-depth *
+      0.75}
+      #{$i *
+      $elevation-depth}
+      #{$i *
+      $elevation-depth}
+      rgb(0 0 0 / 14%);
+  }
+}

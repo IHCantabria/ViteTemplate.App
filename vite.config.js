@@ -54,7 +54,7 @@ export default defineConfig(({ mode }) => {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
         "~": fileURLToPath(new URL("src", import.meta.url)),
         //Example alias bulma sass
-        bulma: "bulma/bulma.sass",
+        // bulma: "bulma/bulma.sass",
       },
     },
     server: {
