@@ -1,11 +1,36 @@
 /* Colors */
-$primary-color: #304b64;
-$primary-color-dark: #002f4a;
-$primary-color-light: #c8dff3;
-$primary-color-transparency: #3259765b;
-$secondary-color: #888785;
-$color-white: #f9f9f9;
-$color-grey: #555555;
-$color-light-white: #f4f4f4;
-$color-light-grey: lightgray;
+$primary-color: #d9241e;
+$primary-color-light: #45e1f0;
+$primary-color-dark: #0f646d;
+$secondary-color: #d2e1ec;
+$secondary-color-light: #f5f8fa;
+$secondary-color-dark: #b3c8d7;
+$accent-color: #b959dc;
+$color-ui: #6989fe;
+$color-ui-gradient: linear-gradient(180deg, #6989fe, #3c64f4);
+$color-white: #ffffff;
+
+/* Base */
+$color-dark: #474747;
+$color-light: #ffffff;
+$color-light-grey: #676a7c;
+
+/* Box Shadow */
+$box-shadow: 0 8px 8px rgb(50 50 71 / 8%);
+$box-shadow-hover: 0 1px 3px 0 rgb(34 34 48 / 53.8%);
 $box-shadow-scroll: inset 0 0 6px rgb(0 0 0 / 30%);
+
+/* Uses */
+$app-background-color: $color-light;
+
+/* Types */
+$info: #339fd7 !default;
+$error: #ea5354 !default;
+$warning: #f1d000 !default;
+$success: #11b896 !default;
+$types: (
+  success: $success,
+  info: $info,
+  warning: $warning,
+  error: $error,
+);
