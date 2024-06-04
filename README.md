@@ -20,8 +20,6 @@ npm install
 
 Additionally, you might want to install:
 
-- [bulma](https://github.com/jgthms/bulma)
-- [vuex](https://github.com/vuejs/vuex/tree/4.0)
 - [vue-router](https://github.com/vuejs/vue-router-next)
 
 ## Additional setup
@@ -110,7 +108,6 @@ npm run coverage
 
 This software uses:
 
-- [Bulma](https://bulma.io/) - MIT License
 - [Leaflet](https://leafletjs.com/) - Branded License
 - [Thredds Data Server](https://www.unidata.ucar.edu/software/tds/current/) - BSD-3 license
 

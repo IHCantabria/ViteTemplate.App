@@ -26,7 +26,8 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "vue": "^3.4.27"
+    "vue": "^3.4.27",
+    "floating-vue": "^5.2.2"
   },
   "devDependencies": {
     "@html-eslint/eslint-plugin": "^0.24.1",
