@@ -34,3 +34,8 @@ lerna-debug.log*
 # Build and distribution folders
 build
 dist
+
+# SonarQube
+*sonar.ps1
+.sonar
+.scannerwork
