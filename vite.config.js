@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       viteCompression({
-        filter: new RegExp("\\.(js|json|css|html|svg)$", "i"),
+        filter: new RegExp("\\.(js|json|css|htm|html|svg)$", "i"),
         threshold: 10240,
         algorithm: "brotliCompress",
         ext: ".br",
@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => {
         deleteOriginFile: false,
       }),
       viteCompression({
-        filter: new RegExp("\\.(js|json|css|html)$", "i"),
+        filter: new RegExp("\\.(js|json|css|htm|html|svg)$", "i"),
         threshold: 10240,
         algorithm: "gzip",
         ext: ".gz",
@@ -56,12 +56,6 @@ export default defineConfig(({ mode }) => {
       port: 8080,
       // Exits if port is already in use
       strictPort: true,
-      // Uncomment for LOCAL DEVELOPMENT only to be able to use https with certificate in localhost.
-      // Https configuration, default is false
-      // https: {
-      //   key: fs.readFileSync("./certificate/localhost-key.pem"),
-      //   cert: fs.readFileSync("./certificate/localhost.pem"),
-      // },
     },
     preview: {
       port: 8080,
@@ -71,6 +65,13 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: dist,
       reportCompressedSize: false,
+      rollupOptions: {
+        output: {
+          entryFileNames: "[name]-ihash[hash].js",
+          chunkFileNames: "[name]-ihash[hash].js",
+          assetFileNames: "[name]-ihash[hash].[ext]",
+        },
+      },
     },
     css: {
       preprocessorOptions: {

@@ -12,7 +12,7 @@ import HelloWorld from "./components/HelloWorld.vue";
 <template>
   <div class="grid">
     <div class="main">
-      <img alt="Vue logo" src="./assets/logo.png" />
+      <img alt="Vue logo" src="@/assets/imgs/logo.png" />
       <HelloWorld msg="Vue 3 + Vite Template" />
     </div>
   </div>

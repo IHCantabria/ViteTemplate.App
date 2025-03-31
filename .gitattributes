@@ -16,3 +16,6 @@
 *.woff2 binary
 *.br binary
 *.gz binary
+*.pdf binary
+*.gif binary
+*.ico binary
