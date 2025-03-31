@@ -1,0 +1,170 @@
+/* Definition of layout */
+// Width of the main content
+$main-content-width: 100vw;
+
+// Max width of the content
+$content-max-width: 1200px;
+
+// Height of the content
+$content-height: 100vh;
+
+// Definition of classes for layout
+.main-content {
+  width: $main-content-width;
+  height: $content-height;
+}
+
+.container {
+  width: 100%;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// displays
+.display {
+  &--flex {
+    display: flex;
+  }
+
+  &--inline-flex {
+    display: inline-flex;
+  }
+
+  &--inline {
+    display: inline;
+  }
+
+  &--block {
+    display: block;
+  }
+
+  &--inline-block {
+    display: inline-block;
+  }
+
+  &--grid {
+    display: grid;
+  }
+
+  &--none {
+    display: none;
+  }
+}
+
+// row and column
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  &--left {
+    justify-content: flex-start;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  &--space-between {
+    justify-content: space-between;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &--top {
+    align-items: flex-start;
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--bottom {
+    align-items: flex-end;
+  }
+
+  &--space-between {
+    justify-content: space-between;
+  }
+
+  &--space-around {
+    justify-content: space-around;
+  }
+
+  &--space-evenly {
+    justify-content: space-evenly;
+  }
+}
+
+// justify
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.space-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.space-evenly {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+// align
+.align-top {
+  display: flex;
+  align-items: flex-start;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.align-bottom {
+  display: flex;
+  align-items: flex-end;
+}
+
+// widths
+.is-fullwidth {
+  width: 100%;
+}

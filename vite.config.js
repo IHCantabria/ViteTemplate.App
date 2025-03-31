@@ -3,8 +3,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import viteCompression from "vite-plugin-compression";
 import dns from "dns";
-const zlib = require("zlib");
-// const fs = require("fs");
+import zlib from "zlib";
 
 // Localhost instead of ip 127.0.0.1
 dns.setDefaultResultOrder("verbatim");
@@ -43,13 +42,19 @@ export default defineConfig(({ mode }) => {
     ],
     define: {
       __APP_VERSION__: JSON.stringify(require("./package.json").version),
+      // Can be set to true if no options api components are used. The build will be lighter
+      __VUE_OPTIONS_API__: "true",
+      // Enables devtools in production env, can be set to true for debugging purposes
+      __VUE_PROD_DEVTOOLS__: "false",
+      // Gives more details about hydration mismatch errors, not needed unless we are using SSR
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "false",
     },
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
         "~": fileURLToPath(new URL("src", import.meta.url)),
         //Example alias bulma sass
-        bulma: "bulma/bulma.sass",
+        // bulma: "bulma/bulma.sass",
       },
     },
     server: {

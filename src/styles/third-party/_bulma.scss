@@ -1,6 +1,0 @@
-@use "@/styles/variables" as app-variables;
-@forward "bulma" with (
-  $primary: app-variables.$primary-color,
-  $primary-light: app-variables.$primary-color-light,
-  $primary-dark: app-variables.$primary-color-dark
-);

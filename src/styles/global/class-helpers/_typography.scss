@@ -1,0 +1,179 @@
+@use "@/styles/variables" as app-variables;
+
+/* Definition of clases for tipography */
+
+/* Type styles */
+
+/* Display, Headline, Title, Subtitle, Body, Caption, Button and label */
+
+/* Display */
+$display-font-size: 64px;
+$display-line-height: 1.167;
+$display-letter-spacing: 0.0156em;
+$display-font-weight: 300;
+
+/* Headline */
+$headline-font-size: 48px;
+$headline-line-height: 1.2;
+$headline-letter-spacing: 0.0093em;
+$headline-font-weight: 300;
+
+/* Title */
+$title-font-size: 24px;
+$title-line-height: 130%;
+$title-letter-spacing: 0.0093em;
+$title-font-weight: 300;
+
+/* Subtitle */
+$subtitle-font-size: 20px;
+$subtitle-line-height: 130%;
+$subtitle-letter-spacing: 0.0073em;
+$subtitle-font-weight: 300;
+
+/* Body */
+$body-font-size: 16px;
+$body-line-height: 130%;
+$body-letter-spacing: 0.0093em;
+$body-font-weight: 300;
+
+/* Button */
+$button-font-size: 16px;
+$button-line-height: 1.75;
+$button-letter-spacing: 0.0285em;
+$button-font-weight: 300;
+
+/* Label */
+$label-font-size: 14px;
+$label-line-height: 1.75;
+$label-letter-spacing: 0.0285em;
+$label-font-weight: 300;
+
+/* Caption */
+$caption-font-size: 11px;
+$caption-line-height: 130%;
+$caption-letter-spacing: 0.0333em;
+$caption-font-weight: 300;
+
+// font-weight
+$allowed-weights: 100 200 300 400 500 600 700 800 900;
+
+/* Definition of classes for tipography */
+
+.hero-title {
+  font-size: $display-font-size;
+  line-height: $display-line-height;
+  letter-spacing: $display-letter-spacing;
+  font-weight: $display-font-weight;
+}
+
+.headline {
+  font-size: $headline-font-size;
+  line-height: $headline-line-height;
+  letter-spacing: $headline-letter-spacing;
+  font-weight: $headline-font-weight;
+}
+
+.title {
+  font-size: $title-font-size;
+  line-height: $title-line-height;
+  letter-spacing: $title-letter-spacing;
+  font-weight: $title-font-weight;
+}
+
+.subtitle {
+  font-size: $subtitle-font-size;
+  line-height: $subtitle-line-height;
+  letter-spacing: $subtitle-letter-spacing;
+  font-weight: $subtitle-font-weight;
+}
+
+.body {
+  font-size: $body-font-size;
+  line-height: $body-line-height;
+  letter-spacing: $body-letter-spacing;
+  font-weight: $body-font-weight;
+}
+
+.button {
+  font-size: $button-font-size;
+  line-height: $button-line-height;
+  letter-spacing: $button-letter-spacing;
+  font-weight: $button-font-weight;
+}
+
+.label {
+  font-size: $label-font-size;
+  line-height: $label-line-height;
+  letter-spacing: $label-letter-spacing;
+  font-weight: $label-font-weight;
+}
+
+.caption {
+  font-size: $caption-font-size;
+  line-height: $caption-line-height;
+  letter-spacing: $caption-letter-spacing;
+  font-weight: $caption-font-weight;
+}
+
+// font-weight
+
+@each $weight in $allowed-weights {
+  .fw-#{$weight} {
+    font-weight: $weight;
+  }
+}
+
+// font size
+// create fs-1 to fs-20, being fs-1 = 16px, fs-2 = 18px, fs-3 = 20px, and so on
+@for $i from 1 through 20 {
+  .fs-#{$i} {
+    font-size: 16px + 2px * ($i - 1);
+  }
+}
+
+// text-align
+.text {
+  &--left {
+    text-align: left;
+  }
+
+  &--right {
+    text-align: right;
+  }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--justify {
+    text-align: justify;
+  }
+}
+
+// text decorations
+.underline {
+  box-shadow: 0 1px 0 rgb(211 211 211);
+}
+
+// MEDIA QUERIES
+// media queries for laptop
+@media (min-width: app-variables.$breakpoint-desktop-to-medium-resolution) {
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 24px;
+  }
+}
+
+// media queries for desktop
+@media (min-width: app-variables.$breakpoint-medium-to-high-resolution) {
+  .title {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 32px;
+  }
+}
