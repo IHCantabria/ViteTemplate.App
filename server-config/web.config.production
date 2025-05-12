@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <system.webServer>
+    <staticContent>
+      <mimeMap fileExtension=".js.gz" mimeType="application/javascript" />
+      <mimeMap fileExtension=".json.gz" mimeType="application/json" />
+      <mimeMap fileExtension=".html.gz" mimeType="text/html" />
+      <mimeMap fileExtension=".htm.gz" mimeType="text/html" />
+      <mimeMap fileExtension=".css.gz" mimeType="text/css" />
+      <mimeMap fileExtension=".svg.gz" mimeType="image/svg+xml" />
+      <mimeMap fileExtension=".js.br" mimeType="application/javascript" />
+      <mimeMap fileExtension=".json.br" mimeType="application/json" />
+      <mimeMap fileExtension=".html.br" mimeType="text/html" />
+      <mimeMap fileExtension=".htm.br" mimeType="text/html" />
+      <mimeMap fileExtension=".css.br" mimeType="text/css" />
+      <mimeMap fileExtension=".svg.br" mimeType="image/svg+xml" />
+    </staticContent>
+    <urlCompression doStaticCompression="false" doDynamicCompression="false"/>
+    <rewrite>
+      <outboundRules>
+        <rule name="Add HSTS Header" enabled="true">
+          <match serverVariable="RESPONSE_Strict-Transport-Security" pattern=".*" />
+          <conditions>
+            <add input="{HTTPS}" pattern="on" />
+          </conditions>
+          <action type="Rewrite" value="max-age=63072000; includeSubDomains" />
+        </rule>
+        <rule name="Add Vary Accept-Encoding" enabled="true">
+          <match serverVariable="RESPONSE_Vary" pattern=".*" />
+          <action type="Rewrite" value="Accept-Encoding" />
+        </rule>
+        <rule name="Add Cache Control Header" enabled="true">
+          <match serverVariable="RESPONSE_Cache-Control" pattern=".*" />
+          <action type="Rewrite" value="public, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0" />
+        </rule>
+        <rule name="Add Expires Header" enabled="true">
+          <match serverVariable="RESPONSE_Expires" pattern=".*" />
+          <action type="Rewrite" value="0" />
+        </rule>
+        <rule name="Add Pragma Header" enabled="true">
+          <match serverVariable="RESPONSE_Pragma" pattern=".*" />
+          <action type="Rewrite" value="no-cache" />
+        </rule>
+        <rule name="Set Cache Control Header for Hashed Files" preCondition="PreHashedFile" enabled="true">
+          <match serverVariable="RESPONSE_Cache-Control" pattern=".*" />
+          <action type="Rewrite" value="public, max-age=31536000, s-maxage=31536000, immutable" />
+        </rule>
+        <rule name="Set Expires Header for Hashed Files" preCondition="PreHashedFile" enabled="true">
+          <match serverVariable="RESPONSE_Expires" pattern=".*" />
+          <action type="Rewrite" value="Thu, 31 Dec 2037 23:55:55 GMT" />
+        </rule>
+        <rule name="Remove Pragma Header from Hashed Files" preCondition="PreHashedFile" enabled="true">
+          <match serverVariable="RESPONSE_Pragma" pattern=".*" />
+           <action type="Rewrite" value="" />
+        </rule>
+        <rule name="Set Cache Control Header for Index Html File" preCondition="PreIndexHtmlFile" enabled="true">
+          <match serverVariable="RESPONSE_Cache-Control" pattern=".*" />
+          <action type="Rewrite" value="no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0" />
+        </rule>
+        <rule name="Set Expires Header for Index Html File" preCondition="PreIndexHtmlFile" enabled="true">
+          <match serverVariable="RESPONSE_Expires" pattern=".*" />
+          <action type="Rewrite" value="0" />
+        </rule>
+        <rule name="Set Pragma Header for Index Html File" preCondition="PreIndexHtmlFile" enabled="true">
+          <match serverVariable="RESPONSE_Pragma" pattern=".*" />
+          <action type="Rewrite" value="no-cache" />
+        </rule>
+        <rule name="Add Encoding Brotli" preCondition="PreCompressedBrotli" enabled="true" stopProcessing="true">
+          <match serverVariable="RESPONSE_Content_Encoding" pattern=".*" />
+          <action type="Rewrite" value="br" />
+        </rule>
+        <rule name="Add Encoding Gzip" preCondition="PreCompressedGzip" enabled="true" stopProcessing="true">
+          <match serverVariable="RESPONSE_Content_Encoding" pattern=".*" />
+          <action type="Rewrite" value="gzip" />
+        </rule>
+        <preConditions>
+          <preCondition name="PreIndexHtmlFile">
+            <add input="{HTTP_URL}" pattern="index\.(htm|html)$" />
+          </preCondition>
+          <preCondition name="PreHashedFile">
+            <add input="{HTTP_URL}" pattern="ihash.{8}\.\w+$" />
+          </preCondition>
+          <preCondition name="PreCompressedBrotli">
+            <add input="{HTTP_URL}" pattern="\.br$" />
+          </preCondition>
+          <preCondition name="PreCompressedGzip">
+            <add input="{HTTP_URL}" pattern="\.gz$" />
+          </preCondition>
+        </preConditions>
+      </outboundRules>
+      <rules>
+        <rule name="Rewrite brotli file request" stopProcessing="true">
+          <match url="(.*)"/>
+          <conditions>
+            <add input="{HTTP_ACCEPT_ENCODING}" pattern="br" />
+            <add input="{REQUEST_FILENAME}" pattern="\.(js|json|htm|html|css|svg)$" />
+            <add input="{REQUEST_FILENAME}.br" matchType="IsFile" />
+          </conditions>
+          <action type="Rewrite" url="{R:1}.br" />
+        </rule>
+        <rule name="Rewrite gzip file request" stopProcessing="true">
+          <match url="(.*)"/>
+          <conditions>
+            <add input="{HTTP_ACCEPT_ENCODING}" pattern="gzip" />
+            <add input="{REQUEST_FILENAME}" pattern="\.(js|json|htm|html|css|svg)$" />
+            <add input="{REQUEST_FILENAME}.gz" matchType="IsFile" />
+          </conditions>
+          <action type="Rewrite" url="{R:1}.gz" />
+        </rule>
+      </rules>
+    </rewrite>
+  </system.webServer>
+</configuration>

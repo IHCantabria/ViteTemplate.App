@@ -4,6 +4,8 @@ import vue from "@vitejs/plugin-vue";
 import viteCompression from "vite-plugin-compression";
 import dns from "dns";
 import zlib from "zlib";
+import fs from "fs";
+import path from "path";
 
 // Localhost instead of ip 127.0.0.1
 dns.setDefaultResultOrder("verbatim");
@@ -12,6 +14,25 @@ dns.setDefaultResultOrder("verbatim");
 export default defineConfig(({ mode }) => {
   //Workaround for building environments
   const dist = mode === "production" ? "build/prod/" : "build/dev/";
+
+  // Custom plugin to copy web.config
+  const copyWebConfig = () => ({
+    name: "copy-web-config",
+    closeBundle: () => {
+      // Determine the environment
+      const webConfigSource =
+        mode === "production"
+          ? "server-config/web.config.production"
+          : "server-config/web.config.development";
+
+      // copy the web.config to the dist folder
+      const targetPath = path.join(dist, "web.config");
+      const content = fs.readFileSync(webConfigSource);
+      fs.writeFileSync(targetPath, content);
+      console.log(`Copiado ${webConfigSource} a ${targetPath}`);
+    },
+  });
+
   return {
     plugins: [
       vue(),
@@ -39,6 +60,7 @@ export default defineConfig(({ mode }) => {
         },
         deleteOriginFile: false,
       }),
+      copyWebConfig(), // Plugin to copy web.config
     ],
     define: {
       __APP_VERSION__: JSON.stringify(require("./package.json").version),
