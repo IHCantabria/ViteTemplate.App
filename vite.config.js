@@ -6,6 +6,7 @@ import dns from "dns";
 import zlib from "zlib";
 import fs from "fs";
 import path from "path";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 
 // Localhost instead of ip 127.0.0.1
 dns.setDefaultResultOrder("verbatim");
@@ -61,6 +62,7 @@ export default defineConfig(({ mode }) => {
         deleteOriginFile: false,
       }),
       copyWebConfig(), // Plugin to copy web.config
+      basicSsl(),
     ],
     define: {
       __APP_VERSION__: JSON.stringify(require("./package.json").version),
@@ -83,11 +85,12 @@ export default defineConfig(({ mode }) => {
       port: 8080,
       // Exits if port is already in use
       strictPort: true,
+      https: true,
     },
     preview: {
       port: 8080,
       strictPort: true,
-      https: false,
+      https: true,
     },
     build: {
       outDir: dist,
