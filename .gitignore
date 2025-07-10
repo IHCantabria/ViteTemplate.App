@@ -39,3 +39,9 @@ dist
 *sonar.ps1
 .sonar
 .scannerwork
+
+# Trivy
+.trivy-bin
+*trivy.ps1
+trivy-reports
+trivy-temp-download
