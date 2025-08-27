@@ -1,7 +1,7 @@
 # TODO: NO QUIERO VER ESTE FICHERO EN LOS REPO DE PROYECTOS. RENOMBRADLO A trivy.ps1 AL BAJAROS LA PLANTILLA
 
 param(
-    [string]$TrivyVersion = "0.64.1",
+    [string]$TrivyVersion = "0.65.0",
     [string]$ReportsFolder = "trivy-reports",
     [string]$ScanTarget = "."
 )
