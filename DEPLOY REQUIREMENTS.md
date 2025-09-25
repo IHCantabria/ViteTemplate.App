@@ -101,8 +101,6 @@ Select only if needed:
 
 **Do you need any other configuration?**
 
-- app_name here must be equal to name property inside package.json 
-- Descargar Release: https://api.github.com/repos/IHCantabria/app_name/releases/tags/app_name-{{ version }}-{{ entorno }}.zip
 
 <br>
 
