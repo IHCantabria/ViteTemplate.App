@@ -1,9 +1,20 @@
 # TODO: NO QUIERO VER ESTE FICHERO EN LOS REPO DE PROYECTOS. RENOMBRADLO A sonar.ps1 AL BAJAROS LA PLANTILLA
 
-# This script sets up and runs SonarQube Scanner on a Windows machine.
+# This script automates the download, configuration, and execution of SonarQube Scanner on Windows.
+# It also includes validation of configuration parameters, connectivity tests to the SonarQube server,
+# and checks the Quality Gate status after the scan.
 
-# Replace "SONAR_TOKEN_KEY" with your user sonar key
-# Replace "PROJECT_KEY" with your actual project key
+#usage:
+#   .\sonarqube-windows.ps1 -SonarScannerVersion "7.2.0.5079" -ProjectKey "my_project_key" -SonarHostUrl "http://mysonarqube.server:9000" -SonarToken "my_sonar_token" -ProjectDir "path\to\my\project" -SkipConnectivityTest -SkipQualityGateCheck
+#
+# Parameters:
+#   -SonarScannerVersion  : SonarQube Scanner version (default: "7.2.0.5079")
+#   -ProjectKey           : SonarQube project key (default: "PROJECT_KEY")
+#   -SonarHostUrl         : SonarQube server URL (default: "http://ihsonarqube.ihcantabria.com:9000")
+#   -SonarToken           : SonarQube authentication token (default: "SONAR_TOKEN_KEY")
+#   -ProjectDir           : Project directory to scan (default: ".")
+#   -SkipConnectivityTest : Skip server connectivity test (switch)
+#   -SkipQualityGateCheck : Skip Quality Gate verification (switch)
 
 param(
     [string]$SonarScannerVersion = "7.2.0.5079",
@@ -11,8 +22,8 @@ param(
     [string]$SonarHostUrl = "http://ihsonarqube.ihcantabria.com:9000",
     [string]$SonarToken = "SONAR_TOKEN_KEY",
     [string]$ProjectDir = ".",
-    [string]$ReportsFolder = "sonar-reports",
-    [switch]$SkipConnectivityTest = $false
+    [switch]$SkipConnectivityTest = $false,
+    [switch]$SkipQualityGateCheck = $false
 )
 
 # Configuration
@@ -153,14 +164,6 @@ function Test-SonarQubeConnectivity {
     }
 }
 
-# Utility: Create reports directory
-function Create-ReportsDirectory {
-    if (-not (Test-Path $ReportsFolder)) {
-        Write-Output "Creating reports directory: $ReportsFolder"
-        New-Item -ItemType Directory -Path $ReportsFolder | Out-Null
-    }
-}
-
 # Utility: Configure SonarQube environment
 function Configure-SonarEnvironment {
     Write-Output "Configuring SonarQube environment..."
@@ -204,13 +207,6 @@ function Run-SonarScan {
         "-Dsonar.working.directory=$ScannerWorkDir"
     )
 
-    # Add optional report output if reports folder exists
-    if (Test-Path $ReportsFolder) {
-        $reportPath = Join-Path $ReportsFolder "sonar-report.xml"
-        $arguments += "-Dsonar.analysis.mode=issues"
-        $arguments += "-Dsonar.report.export.path=$reportPath"
-    }
-
     try {
         Write-Output "Executing: $ScannerExecutable"
         Write-Output "Arguments: $($arguments -join ' ')"
@@ -238,6 +234,163 @@ function Run-SonarScan {
     }
 }
 
+# Utility: Validate SonarQube token and permissions
+function Test-SonarQubeAuthentication {
+    Write-Output "Validating SonarQube authentication..."
+    
+    try {
+        $headers = @{
+            "Authorization" = "Bearer $SonarToken"
+        }
+        
+        # Test authentication with a simple API call
+        $authTestUrl = "$SonarHostUrl/api/authentication/validate"
+        $response = Invoke-WebRequest -Uri $authTestUrl -Headers $headers -Method GET -UseBasicParsing -TimeoutSec 10
+        
+        if ($response.StatusCode -eq 200) {
+            $authData = $response.Content | ConvertFrom-Json
+            if ($authData.valid -eq $true) {
+                Write-Output "Token authentication successful."
+                return $true
+            } else {
+                Write-Error "Token is not valid."
+                return $false
+            }
+        } else {
+            Write-Warning "Authentication test returned status: $($response.StatusCode)"
+            return $false
+        }
+    } catch {
+        if ($_.Exception.Message -match "403") {
+            Write-Error "Authentication failed (403 Forbidden). Please check your SonarQube token."
+            Write-Output "Token troubleshooting:"
+            Write-Output "1. Verify the token is correct and not expired"
+            Write-Output "2. Ensure the token has 'Execute Analysis' permissions"
+            Write-Output "3. Check if the project key '$ProjectKey' exists and you have access to it"
+            Write-Output "4. Verify the SonarQube server URL: $SonarHostUrl"
+        } elseif ($_.Exception.Message -match "401") {
+            Write-Error "Authentication failed (401 Unauthorized). Token may be invalid or expired."
+        } else {
+            Write-Warning "Could not validate authentication: $_"
+        }
+        return $false
+    }
+}
+
+# Utility: Check Quality Gate status
+function Check-QualityGate {
+    if ($SkipQualityGateCheck) {
+        Write-Output "Quality Gate check skipped by user request."
+        return
+    }
+    
+    Write-Output "Checking Quality Gate status..."
+    
+    # First validate authentication
+    if (-not (Test-SonarQubeAuthentication)) {
+        Write-Error "Cannot proceed with Quality Gate check due to authentication issues."
+        exit 1
+    }
+    
+    try {
+        # Simplified approach: try to get Quality Gate status directly with retries
+        $maxAttempts = 10  # Reduced attempts for direct Quality Gate check
+        $attempt = 0
+        $qualityGateChecked = $false
+        
+        $headers = @{
+            "Authorization" = "Bearer $SonarToken"
+        }
+        
+        while ($attempt -lt $maxAttempts -and -not $qualityGateChecked) {
+            $attempt++
+            Write-Output "Attempt $attempt/$maxAttempts - Checking Quality Gate status..."
+            
+            try {
+                # Get project status from SonarQube API
+                $qualityGateUrl = "$SonarHostUrl/api/qualitygates/project_status?projectKey=$ProjectKey"
+                $response = Invoke-WebRequest -Uri $qualityGateUrl -Headers $headers -Method GET -UseBasicParsing -TimeoutSec 15
+                $qualityGateData = $response.Content | ConvertFrom-Json
+                
+                # Check if we have valid quality gate data
+                if ($qualityGateData.projectStatus -and $qualityGateData.projectStatus.status) {
+                    $projectStatus = $qualityGateData.projectStatus.status
+                    Write-Output "Quality Gate Status: $projectStatus"
+                    $qualityGateChecked = $true
+                    
+                    if ($projectStatus -eq "ERROR") {
+                        Write-Host "Quality Gate FAILED! The project has critical issues that need to be addressed." -ForegroundColor Red
+                        
+                        # Show detailed information about failed conditions
+                        if ($qualityGateData.projectStatus.conditions) {
+                            Write-Host "Failed conditions:" -ForegroundColor Yellow
+                            foreach ($condition in $qualityGateData.projectStatus.conditions) {
+                                if ($condition.status -eq "ERROR") {
+                                    Write-Host "  - $($condition.metricKey): $($condition.actualValue) (threshold: $($condition.errorThreshold))" -ForegroundColor Red
+                                }
+                            }
+                        }
+                        
+                        Write-Host "Please check the SonarQube dashboard for detailed analysis: $SonarHostUrl/dashboard?id=$ProjectKey" -ForegroundColor Yellow
+                        exit 1
+                    } elseif ($projectStatus -eq "WARN") {
+                        Write-Warning "Quality Gate passed with warnings. Consider reviewing the issues found."
+                        
+                        # Show warning conditions
+                        if ($qualityGateData.projectStatus.conditions) {
+                            Write-Host "Warning conditions:" -ForegroundColor Yellow
+                            foreach ($condition in $qualityGateData.projectStatus.conditions) {
+                                if ($condition.status -eq "WARN") {
+                                    Write-Host "  - $($condition.metricKey): $($condition.actualValue) (threshold: $($condition.warningThreshold))" -ForegroundColor Yellow
+                                }
+                            }
+                        }
+                    } else {
+                        Write-Output "Quality Gate PASSED! No critical issues found."
+                    }
+                    break
+                } else {
+                    Write-Warning "Quality Gate data not yet available. Analysis may still be processing..."
+                    if ($attempt -lt $maxAttempts) {
+                        Start-Sleep -Seconds 10  # Wait longer between attempts
+                    }
+                }
+                
+            } catch {
+                $errorMessage = $_.Exception.Message
+                if ($errorMessage -match "403") {
+                    Write-Error "Access denied (403) when checking Quality Gate. Possible causes:"
+                    Write-Output "1. Token lacks permissions for project '$ProjectKey'"
+                    Write-Output "2. Project key '$ProjectKey' does not exist"
+                    Write-Output "3. Token does not have 'Browse' permissions on the project"
+                    exit 1
+                } elseif ($errorMessage -match "404") {
+                    Write-Warning "Project not found (404). Analysis may not be complete yet..."
+                    if ($attempt -lt $maxAttempts) {
+                        Start-Sleep -Seconds 10
+                    }
+                } else {
+                    Write-Warning "Could not check Quality Gate status (attempt $attempt): $errorMessage"
+                    if ($attempt -lt $maxAttempts) {
+                        Start-Sleep -Seconds 10
+                    }
+                }
+            }
+        }
+        
+        if (-not $qualityGateChecked) {
+            Write-Warning "Could not retrieve Quality Gate status after $maxAttempts attempts."
+            Write-Output "Analysis completed but Quality Gate status is unknown."
+            Write-Output "Please check manually: $SonarHostUrl/dashboard?id=$ProjectKey"
+        }
+        
+    } catch {
+        Write-Warning "Could not retrieve Quality Gate status: $_"
+        Write-Output "Analysis completed but Quality Gate status is unknown."
+        Write-Output "Please check manually: $SonarHostUrl/dashboard?id=$ProjectKey"
+    }
+}
+
 
 
 # Execution flow
@@ -247,16 +400,16 @@ try {
     Write-Output "Project Key: $ProjectKey"
     Write-Output "Host URL: $SonarHostUrl"
     Write-Output "Project Directory: $ProjectDir"
-    Write-Output "Reports Folder: $ReportsFolder"
     Write-Output "Skip Connectivity Test: $SkipConnectivityTest"
+    Write-Output "Skip Quality Gate Check: $SkipQualityGateCheck"
     Write-Output "================================================"
     
     Validate-Configuration
     Test-SonarQubeConnectivity
-    Create-ReportsDirectory
     Download-SonarScanner
     Configure-SonarEnvironment
     Run-SonarScan
+    Check-QualityGate
     
     Write-Output "=== SonarQube analysis completed successfully! ==="
 } catch {
