@@ -19,7 +19,7 @@
 param(
     [string]$SonarScannerVersion = "7.2.0.5079",
     [string]$ProjectKey = "PROJECT_KEY",
-    [string]$SonarHostUrl = "http://ihsonarqube.ihcantabria.com:9000",
+    [string]$SonarHostUrl = "https://ihsonarqube.ihcantabria.com",
     [string]$SonarToken = "SONAR_TOKEN_KEY",
     [string]$ProjectDir = ".",
     [switch]$SkipConnectivityTest = $false,
@@ -293,8 +293,7 @@ function Check-QualityGate {
     }
     
     try {
-        # Simplified approach: try to get Quality Gate status directly with retries
-        $maxAttempts = 10  # Reduced attempts for direct Quality Gate check
+        $maxAttempts = 5
         $attempt = 0
         $qualityGateChecked = $false
         
@@ -352,7 +351,7 @@ function Check-QualityGate {
                 } else {
                     Write-Warning "Quality Gate data not yet available. Analysis may still be processing..."
                     if ($attempt -lt $maxAttempts) {
-                        Start-Sleep -Seconds 10  # Wait longer between attempts
+                        Start-Sleep -Seconds 10
                     }
                 }
                 
