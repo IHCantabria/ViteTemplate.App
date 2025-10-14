@@ -10,7 +10,7 @@
 # Parameters:
 #   -SonarScannerVersion  : SonarQube Scanner version (default: "7.2.0.5079")
 #   -ProjectKey           : SonarQube project key (default: "PROJECT_KEY")
-#   -SonarHostUrl         : SonarQube server URL (default: "http://ihsonarqube.ihcantabria.com:9000")
+#   -SonarHostUrl         : SonarQube server URL (default: "https://ihsonarqube.ihcantabria.com:9000")
 #   -SonarToken           : SonarQube authentication token (default: "SONAR_TOKEN_KEY")
 #   -ProjectDir           : Project directory to scan (default: ".")
 #   -SkipConnectivityTest : Skip server connectivity test (switch)
