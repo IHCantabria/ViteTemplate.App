@@ -156,18 +156,23 @@ function Run-TrivyScan {
         exit 1
     }
 
-    Write-Output "Scan target: $absoluteScanTarget"
+    # Convert to string to avoid issues with paths containing spaces
+    $scanTargetPath = $absoluteScanTarget.ProviderPath
+    Write-Output "Scan target: $scanTargetPath"
     Write-Output "Starting Trivy security scan..."
     
     try {
         Write-Output "Running Trivy scan (JSON report)..."
         Write-Output "Executing: $TrivyExecutable"
         
-        $jsonArgs = @("fs", "--scanners", "vuln,secret,misconfig,license", "--license-full", "--ignore-unfixed", "--skip-dirs", ".vs,.vscode,.trivy,trivy-temp-download,trivy-reports,logs,.git", "--format", "json", "-o", $JsonReport, $absoluteScanTarget)
-        $process = Start-Process -FilePath $TrivyExecutable -ArgumentList $jsonArgs -NoNewWindow -Wait -PassThru
+        $jsonArgs = @("fs", "--scanners", "vuln,secret,misconfig,license", "--license-full", "--ignore-unfixed", "--skip-dirs", ".vs,.vscode,.trivy,trivy-temp-download,trivy-reports,logs,.git", "--format", "json", "-o", $JsonReport, $scanTargetPath)
+        
+        # Use & operator instead of Start-Process to properly handle paths with spaces
+        & $TrivyExecutable $jsonArgs
+        $exitCode = $LASTEXITCODE
 
-        if ($process.ExitCode -ne 0) {
-            Write-Error "Trivy JSON scan failed with exit code: $($process.ExitCode)"
+        if ($exitCode -ne 0) {
+            Write-Error "Trivy JSON scan failed with exit code: $exitCode"
             exit 1
         }
 
@@ -181,10 +186,13 @@ function Run-TrivyScan {
         # Generate HTML report if template is available
         if (Test-Path $HtmlTemplate) {
             Write-Output "Generating HTML report..."
-            $htmlArgs = @("fs", "--scanners", "vuln,secret,misconfig", "--ignore-unfixed", "--skip-dirs", ".vs,.vscode,.trivy,trivy-temp-download,trivy-reports,logs,.git", "--format", "template", "--template", "@$HtmlTemplate", "--output", $HtmlReport, $absoluteScanTarget)
-            $htmlProcess = Start-Process -FilePath $TrivyExecutable -ArgumentList $htmlArgs -NoNewWindow -Wait -PassThru
-            
-            if ($htmlProcess.ExitCode -eq 0 -and (Test-Path $HtmlReport)) {
+            $htmlArgs = @("fs", "--scanners", "vuln,secret,misconfig", "--ignore-unfixed", "--skip-dirs", ".vs,.vscode,.trivy,trivy-temp-download,trivy-reports,logs,.git", "--format", "template", "--template", "@$HtmlTemplate", "--output", $HtmlReport, $scanTargetPath)
+           
+            # Use & operator instead of Start-Process to properly handle paths with spaces
+            & $TrivyExecutable $htmlArgs
+            $htmlExitCode = $LASTEXITCODE
+           
+            if ($htmlExitCode -eq 0 -and (Test-Path $HtmlReport)) {
                 Write-Output "HTML report generated successfully."
             } else {
                 Write-Warning "Warning: Failed to generate HTML report."
