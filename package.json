@@ -35,8 +35,8 @@
     "@html-eslint/eslint-plugin": "^0.24.1",
     "@html-eslint/parser": "^0.24.1",
     "@iconify-json/mdi": "^1.1.66",
-    "@vitejs/plugin-basic-ssl": "^1.2.0",
-    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-basic-ssl": "^2.1.0",
+    "@vitejs/plugin-vue": "^6.0.1",
     "@vue/test-utils": "^2.4.6",
     "c8": "^9.1.0",
     "eslint": "^8.19.0",
@@ -56,7 +56,7 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-prettier": "^5.0.0",
-    "vite": "^5.2.11",
+    "vite": "^7.1.12",
     "vite-plugin-compression": "^0.5.1"
   }
 }
