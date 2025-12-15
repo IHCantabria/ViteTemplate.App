@@ -35,10 +35,20 @@ const count = ref(0);
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
 
-  <button id="button-count" type="button" @click="count++">
+  <button
+    id="button-count"
+    data-test="buttoncount"
+    type="button"
+    @click="count++"
+  >
     count is: {{ count }}
   </button>
-  <input id="input-count" v-model="count" type="number" />
+  <input
+    id="input-count"
+    v-model="count"
+    data-test="inputcount"
+    type="number"
+  />
 
   <p>
     Edit
