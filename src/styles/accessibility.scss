@@ -1,0 +1,93 @@
+/* stylelint-disable declaration-no-important */
+
+/**
+ * Accessible Helper Classes for SCSS
+ * Based on WCAG 2.1 guidelines
+ * 
+ * Usage: @import '@/styles/accessibility'
+ */
+
+/* Visually hidden but accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible states - consistent across all interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+}
+
+/* Ensure no keyboard traps */
+*:focus {
+  box-shadow: none; /* Don't override focus outline with box-shadow */
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+}
+
+/* Screen reader only text class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip link styling (shows on focus) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+/* Ensure sufficient color contrast ratios */
+
+/* Use these when defining custom color schemes */
+$contrast-ratio-aa: 4.5; // 1:4.5 for body text
+$contrast-ratio-aaa: 7; // 1:7 for enhanced accessibility

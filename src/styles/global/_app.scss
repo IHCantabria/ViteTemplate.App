@@ -13,9 +13,15 @@ html::-webkit-scrollbar {
 
 a {
   color: app-variables.$app-font-color;
+  text-decoration: underline;
 
   &:hover {
     color: app-variables.$primary-color;
+  }
+
+  &:focus-visible {
+    outline: 2px solid app-variables.$focus-color;
+    outline-offset: 2px;
   }
 }
 
