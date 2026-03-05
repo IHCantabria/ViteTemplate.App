@@ -130,5 +130,13 @@
 - Shotgun surgery
 - Hidden side effects
 
-## Read .agents folder content for specific agent instructions and guidelines about accessibility, seo, best-practices, core-web-vitals and performance. Read SKILL.md files and references folders content for detailed information on each topic.
+### Agents — MANDATORY SKILL LOADING
+
+**Before starting ANY task**, you MUST perform the following steps in order:
+
+1. List the contents of `.agents/skills/` to discover all available skills.
+2. Read the `SKILL.md` file of **every skill whose domain is relevant** to the current task.
+3. Apply the instructions found in those files throughout the entire response.
+
+
 
