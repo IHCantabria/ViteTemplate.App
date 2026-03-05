@@ -6,6 +6,8 @@
     "dbaeumer.vscode-eslint", // ESLint - Integrates ESLint JavaScript into VS Code.
     "esbenp.prettier-vscode", // Prettier - Code formatter - Code formatter using prettier
     "wayou.vscode-todo-highlight", //TODO Highlight - highlight TODOs, FIXMEs, and any keywords, annotations...
-    "gruntfuggly.todo-tree" //Todo Tree - Show TODO, FIXME, etc. comment tags in a tree view
+    "gruntfuggly.todo-tree", //Todo Tree - Show TODO, FIXME, etc. comment tags in a tree view
+    // add axe accessibility linter extension here when we decide which one to use
+    "deque-systems.vscode-axe-linter" // Axe Linter - Accessibility linting for HTML and JSX using axe-core
   ]
 }

@@ -9,13 +9,14 @@
     "plugin:vue/vue3-recommended",
     "plugin:promise/recommended",
     "plugin:import/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:vuejs-accessibility/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["vue", "local-rules"],
+  "plugins": ["vue", "local-rules", "vuejs-accessibility"],
   "rules": {
     "local-rules/require-id-on-inputs-buttons": "error",
     "local-rules/require-data-test-on-inputs-buttons": "error",
