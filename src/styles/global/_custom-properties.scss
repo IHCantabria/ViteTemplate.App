@@ -1,0 +1,30 @@
+@use "sass:meta";
+@use "@/styles/variables/colors";
+@use "@/styles/variables/fonts";
+@use "@/styles/variables/radius";
+@use "@/styles/variables/transitions";
+@use "@/styles/variables/z-index";
+
+/*
+ * Exposes every SCSS design token as a CSS custom property on :root, with the
+ * same name: $color-primary-40 -> --color-primary-40, $radius-sm -> --radius-sm.
+ *
+ * Generated automatically: a new token added to any of the modules above shows
+ * up here without touching this file. Maps (e.g. $types) and mixins are skipped.
+ * Breakpoints are not exposed: custom properties do not work in media queries.
+ *
+ * SCSS stays the source of truth for styles. Use the custom properties for
+ * runtime needs: theming overrides, inline styles, or reading a token from JS:
+ *   getComputedStyle(document.documentElement).getPropertyValue("--color-primary")
+ */
+$token-modules: "colors", "fonts", "radius", "transitions", "z-index";
+
+:root {
+  @each $module in $token-modules {
+    @each $name, $value in meta.module-variables($module) {
+      @if meta.type-of($value) != "map" {
+        --#{$name}: #{meta.inspect($value)};
+      }
+    }
+  }
+}

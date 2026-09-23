@@ -1,37 +1,110 @@
-/* Colors */
-$primary-color: #d9241e;
-$primary-color-light: #45e1f0;
-$primary-color-dark: #0f646d;
-$secondary-color: #d2e1ec;
-$secondary-color-light: #f5f8fa;
-$secondary-color-dark: #b3c8d7;
-$accent-color: #b959dc;
-$color-ui: #6989fe;
-$color-ui-gradient: linear-gradient(180deg, #6989fe, #3c64f4);
+/* COLORS */
+
+// Every palette follows the same scale: 10 is the lightest tier, 60 the darkest.
+// The bare token ($color-primary, ...) is the brand reference color.
+// Each project only needs to change the values below; gradients, mixins and
+// accessible variants are derived from these tokens.
+
+// Primary
+$color-primary: #4e92f9;
+$color-primary-60: #002153;
+$color-primary-50: #003e88;
+$color-primary-40: #2070e8;
+$color-primary-30: #478bef;
+$color-primary-20: #82b5ff;
+$color-primary-10: #edf4ff;
+
+// Secondary
+$color-secondary: #e0680e;
+$color-secondary-60: #2d1200;
+$color-secondary-50: #522700;
+$color-secondary-40: #7f4100;
+$color-secondary-30: #b55c00;
+$color-secondary-20: #e57b17;
+$color-secondary-10: #fce8d6;
+
+// Accent
+$color-accent: #ffc100;
+$color-accent-60: #321700;
+$color-accent-50: #5a3700;
+$color-accent-40: #865c00;
+$color-accent-30: #b58300;
+$color-accent-20: #e5ad00;
+$color-accent-10: #ffda5d;
+
+// App colors
 $color-white: #ffffff;
-$focus-color: #005fcc;
 
 /* Base */
-$color-dark: #474747;
-$color-light: #ffffff;
-$color-light-grey: #676a7c;
+$color-base: #1e1e1e;
+$color-base-60: #212121;
+$color-base-50: #3e3e3e;
+$color-base-40: #636363;
+$color-base-30: #a5a5a5;
+$color-base-20: #eaeaea;
+$color-base-10: #fafafa;
+$color-text: $color-base-60;
+$color-text-muted: $color-base-40;
+
+/* Gradients */
+$gradient-primary: linear-gradient(
+  180deg,
+  $color-primary-30 0%,
+  $color-primary-40 100%
+);
+$gradient-secondary: linear-gradient(
+  180deg,
+  $color-secondary-20 0%,
+  $color-secondary 100%
+);
+$gradient-accent: linear-gradient(
+  180deg,
+  $color-accent-10 0%,
+  $color-accent-20 100%
+);
+$gradient-base: linear-gradient(180deg, $color-base-40 0%, $color-base-50 100%);
 
 /* Box Shadow */
 $box-shadow: 0 8px 8px rgb(50 50 71 / 8%);
-$box-shadow-hover: 0 1px 3px 0 rgb(34 34 48 / 53.8%);
+$box-shadow-hover: 0 1px 3px 0 rgb(34 34 48 / 54%);
 $box-shadow-scroll: inset 0 0 6px rgb(0 0 0 / 30%);
-
-/* Uses */
-$app-background-color: $color-light;
+$box-shadow-card:
+  0 1px 2px 0 rgb(0 0 0 / 5%),
+  0 1px 4px 0 rgb(0 0 0 / 10%);
 
 /* Types */
-$info: #339fd7 !default;
-$error: #ea5354 !default;
-$warning: #f1d000 !default;
-$success: #11b896 !default;
+$color-info: #339fd7 !default;
+$color-error: #ea5354 !default;
+$color-warning: #c8ae06 !default;
+$color-success: #11b896 !default;
 $types: (
-  success: $success,
-  info: $info,
-  warning: $warning,
-  error: $error,
+  success: $color-success,
+  info: $color-info,
+  warning: $color-warning,
+  error: $color-error,
 );
+
+/* Accessible text variants (WCAG 1.4.3, >= 4.5:1 on white/$color-base-10) */
+// Brand and type colors are usually fine for backgrounds, borders and icons
+// but too light for normal-size text. Use these whenever the color paints
+// text. Re-check the contrast every time the palette above changes.
+$color-primary-text: $color-primary-40;
+$color-error-text: #c54546;
+$color-success-text: #228d39;
+
+/* Focus */
+$color-focus: $color-primary-40;
+
+/* Blur surfaces (map controls, floating panels...) */
+@mixin blur-medium {
+  background: rgba($color-base-60, 0.5);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+@mixin blur-dark {
+  background: rgba($color-primary-60, 0.82);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+  border-color: rgba($color-primary-60, 0.82);
+}

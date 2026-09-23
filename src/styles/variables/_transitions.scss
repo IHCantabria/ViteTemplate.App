@@ -1,0 +1,8 @@
+/* Transitions */
+// Usage: transition: opacity $duration-base $easing-standard;
+$duration-fast: 0.15s;
+$duration-base: 0.2s;
+$duration-slow: 0.3s;
+$easing-standard: ease;
+$easing-in: ease-in;
+$easing-out: ease-out;

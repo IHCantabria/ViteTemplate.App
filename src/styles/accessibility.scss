@@ -1,62 +1,26 @@
 /* stylelint-disable declaration-no-important */
 
+@use "@/styles/variables" as app-variables;
+
 /**
- * Accessible Helper Classes for SCSS
- * Based on WCAG 2.1 guidelines
- * 
- * Usage: @import '@/styles/accessibility'
+ * Global accessibility helpers (WCAG 2.1).
+ *
+ * Philosophy:
+ * - Native semantic HTML is the first line of defense (button, a, dialog,
+ *   input, label…). These styles reinforce that base; they do not replace it.
+ * - focus-visible uses the project palette to keep visual identity
+ *   and enough contrast on light and dark backgrounds.
+ *
+ * Imported from src/styles/_index.scss → available globally.
  */
 
-/* Visually hidden but accessible to screen readers */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Focus visible states - consistent across all interactive elements */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-[tabindex]:focus-visible {
-  outline: 2px solid #005fcc;
-  outline-offset: 2px;
-}
-
-/* Ensure no keyboard traps */
-*:focus {
-  box-shadow: none; /* Don't override focus outline with box-shadow */
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: more) {
-  a {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
-}
-
-/* Screen reader only text class */
+/* ---------------------------------------------------------------------------
+ * 1. Screen-reader-only text
+ * ---------------------------------------------------------------------------
+ * Keeps content accessible to assistive technologies but visually
+ * invisible. Use for icon labels, loading messages, etc.
+ */
+.visually-hidden,
 .sr-only {
   position: absolute;
   width: 1px;
@@ -64,20 +28,76 @@ textarea:focus-visible,
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
 }
 
-/* Skip link styling (shows on focus) */
+/* Variant that restores visibility on focus — useful for skip links
+   or admin shortcuts that are normally hidden. */
+.visually-hidden-focusable:not(:focus, :focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * 2. Brand-consistent focus indicator
+ * ---------------------------------------------------------------------------
+ * `:focus-visible` avoids the outline on mouse clicks but keeps it for
+ * keyboard. Check that $color-focus keeps >= 3:1 contrast on the app
+ * backgrounds. Any component that needs a different ring can override it
+ * within its scope.
+ */
+:focus-visible {
+  outline: 2px solid app-variables.$color-focus;
+  outline-offset: 2px;
+  border-radius: app-variables.$radius-xs;
+}
+
+/* Remove the default outline on non-visible `:focus` so `:focus-visible`
+   is the single source of truth. We do not disable focus — the outline still
+   shows for keyboard navigation. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * 3. Minimum touch target size (WCAG 2.5.5 — Target Size)
+ * ---------------------------------------------------------------------------
+ * 24x24 CSS px is the AA minimum. Applied only to clearly interactive
+ * controls so inline links and decorative icons are not widened. The
+ * `.btn` classes already meet 40px; this block covers standalone buttons.
+ */
+:where(
+  button,
+  [role="button"],
+  [type="button"],
+  [type="submit"],
+  [type="reset"]
+) {
+  min-height: 24px;
+  min-width: 24px;
+}
+
+/* ---------------------------------------------------------------------------
+ * 4. Skip link (shows on focus)
+ * ---------------------------------------------------------------------------
+ */
 .skip-link {
   position: absolute;
   top: -40px;
   left: 0;
-  background: #000;
-  color: #fff;
+  background: app-variables.$color-base;
+  color: app-variables.$color-white;
   padding: 8px 16px;
-  z-index: 100;
+  z-index: app-variables.$z-index-skip-link;
   text-decoration: none;
   font-weight: bold;
 
@@ -86,8 +106,91 @@ textarea:focus-visible,
   }
 }
 
-/* Ensure sufficient color contrast ratios */
+/* ---------------------------------------------------------------------------
+ * 5. inert — visual fallback
+ * ---------------------------------------------------------------------------
+ * Although `inert` already blocks interactions natively since Chrome 102, FF 112
+ * and Safari 15.5, this fallback adds consistent visual indication and disables
+ * the cursor to emphasize that the area is unavailable.
+ */
+/* stylelint-disable selector-max-universal -- visual propagation must
+   reach all descendants to reflect the inert state of the subtree. */
+[inert],
+[inert] * {
+  user-select: none;
+  pointer-events: none;
+  cursor: default;
+}
+/* stylelint-enable selector-max-universal */
 
-/* Use these when defining custom color schemes */
-$contrast-ratio-aa: 4.5; // 1:4.5 for body text
-$contrast-ratio-aaa: 7; // 1:7 for enhanced accessibility
+/* ---------------------------------------------------------------------------
+ * 6. Broken images — visible alt text when src fails
+ * ---------------------------------------------------------------------------
+ * Improves UX for users with slow networks or adblockers that break resources.
+ */
+img {
+  font-style: italic;
+  font-size: 0.875rem;
+  color: app-variables.$color-base-40;
+}
+
+/* ---------------------------------------------------------------------------
+ * 7. Contrast constants (reference)
+ * ---------------------------------------------------------------------------
+ * Variables exposed for automated reviews — not applied as CSS.
+ */
+$contrast-ratio-aa: 4.5; // 1:4.5 for normal ratio
+$contrast-ratio-aaa: 7; // 1:7 for improved accessibility
+
+/* Media queries */
+
+/* ---------------------------------------------------------------------------
+ * 8. Reduced motion (prefers-reduced-motion)
+ * ---------------------------------------------------------------------------
+ * We cancel animations and transitions but do not change scroll logic.
+ * Use !important because many animations are declared with high specificity
+ * in scoped components. State indicators (loading spinners...) that must
+ * keep moving should opt back in here.
+ */
+@media (prefers-reduced-motion: reduce) {
+  /* stylelint-disable selector-max-universal -- required: motion reduction
+     must be able to cancel any animation or transition,
+     regardless of which component declared it. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* stylelint-enable selector-max-universal */
+}
+
+/* ---------------------------------------------------------------------------
+ * 9. High-contrast mode (Windows / OS preference)
+ * ---------------------------------------------------------------------------
+ * `forced-colors` (Edge/Chrome/Firefox) ensures components that
+ * use their own colors keep readable borders and text when the OS imposes
+ * its palette. `prefers-contrast: more` covers users who only increase contrast.
+ */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 2px;
+  }
+
+  button,
+  .btn,
+  [role="button"] {
+    border: 1px solid ButtonText;
+  }
+}
+
+@media (prefers-contrast: more) {
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+}

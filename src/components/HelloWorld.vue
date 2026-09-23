@@ -55,9 +55,11 @@ const count = ref(0);
     id="button-count"
     data-test="buttoncount"
     type="button"
+    class="btn btn-primary btn-square mb-3"
+    :style="{ width: '250px' }"
     @click="count++"
   >
-    Increment click count:{{ count }}
+    Increment click count: {{ count }}
   </button>
 
   <div class="form-group">

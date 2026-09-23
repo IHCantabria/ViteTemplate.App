@@ -7,49 +7,49 @@
 /* Display, Headline, Title, Subtitle, Body, Caption, Button and label */
 
 /* Display */
-$display-font-size: 64px;
+$display-font-size: 4rem;
 $display-line-height: 1.167;
 $display-letter-spacing: 0.0156em;
 $display-font-weight: 300;
 
 /* Headline */
-$headline-font-size: 48px;
+$headline-font-size: 3rem;
 $headline-line-height: 1.2;
 $headline-letter-spacing: 0.0093em;
 $headline-font-weight: 300;
 
 /* Title */
-$title-font-size: 24px;
+$title-font-size: 1.5rem;
 $title-line-height: 130%;
 $title-letter-spacing: 0.0093em;
 $title-font-weight: 300;
 
 /* Subtitle */
-$subtitle-font-size: 20px;
+$subtitle-font-size: 1.25rem;
 $subtitle-line-height: 130%;
 $subtitle-letter-spacing: 0.0073em;
 $subtitle-font-weight: 300;
 
 /* Body */
-$body-font-size: 16px;
+$body-font-size: 1rem;
 $body-line-height: 130%;
 $body-letter-spacing: 0.0093em;
 $body-font-weight: 300;
 
 /* Button */
-$button-font-size: 16px;
+$button-font-size: 1rem;
 $button-line-height: 1.75;
 $button-letter-spacing: 0.0285em;
 $button-font-weight: 300;
 
 /* Label */
-$label-font-size: 14px;
+$label-font-size: 0.875rem;
 $label-line-height: 1.75;
 $label-letter-spacing: 0.0285em;
 $label-font-weight: 300;
 
 /* Caption */
-$caption-font-size: 11px;
+$caption-font-size: 0.6875rem;
 $caption-line-height: 130%;
 $caption-letter-spacing: 0.0333em;
 $caption-font-weight: 300;
@@ -124,10 +124,10 @@ $allowed-weights: 100 200 300 400 500 600 700 800 900;
 }
 
 // font size
-// create fs-1 to fs-20, being fs-1 = 16px, fs-2 = 18px, fs-3 = 20px, and so on
+// create fs-1 to fs-20, being fs-1 = 1rem (16px), fs-2 = 1.125rem (18px), and so on
 @for $i from 1 through 20 {
   .fs-#{$i} {
-    font-size: 16px + 2px * ($i - 1);
+    font-size: 1rem + 0.125rem * ($i - 1);
   }
 }
 
@@ -152,28 +152,28 @@ $allowed-weights: 100 200 300 400 500 600 700 800 900;
 
 // text decorations
 .underline {
-  box-shadow: 0 1px 0 rgb(211 211 211);
+  box-shadow: 0 1px 0 app-variables.$color-base-30;
 }
 
 // MEDIA QUERIES
 // media queries for laptop
 @media (min-width: app-variables.$breakpoint-desktop-to-medium-resolution) {
   .title {
-    font-size: 28px;
+    font-size: 1.75rem;
   }
 
   .subtitle {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 }
 
 // media queries for desktop
 @media (min-width: app-variables.$breakpoint-medium-to-high-resolution) {
   .title {
-    font-size: 32px;
+    font-size: 2rem;
   }
 
   .subtitle {
-    font-size: 32px;
+    font-size: 2rem;
   }
 }

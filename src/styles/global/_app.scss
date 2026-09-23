@@ -1,9 +1,12 @@
+@use "sass:map";
 @use "@/styles/variables" as app-variables;
 
-/* Hide scrollbar for IE, Edge and Firefox */
+// GLOBAL STYLES
 html {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  font-family: app-variables.$app-font;
+  box-sizing: border-box;
+  -ms-overflow-style: none; /* Hide scrollbar: IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar: Firefox */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -11,24 +14,83 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+body,
+div,
+span,
+section,
+article,
+aside,
+nav,
+header,
+footer,
+main {
+  font-family: inherit;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(app-variables.$color-primary-60, 0.45) transparent;
+}
+
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+body::-webkit-scrollbar,
+div::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
+  background-color: rgba(app-variables.$color-primary-60, 0.45);
+  border-radius: app-variables.$radius-pill;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+body::-webkit-scrollbar-thumb:hover,
+div::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(app-variables.$color-primary-60, 0.7);
+}
+
+body::-webkit-scrollbar-thumb:active,
+div::-webkit-scrollbar-thumb:active {
+  background-color: rgba(app-variables.$color-primary-60, 0.9);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: app-variables.$color-text;
+  background-color: app-variables.$color-white;
+  line-height: 1.25;
+}
+
+// LINKS
 a {
-  color: app-variables.$app-font-color;
+  color: app-variables.$color-text;
   text-decoration: underline;
 
   &:hover {
-    color: app-variables.$primary-color;
+    color: app-variables.$color-primary;
   }
 
   &:focus-visible {
-    outline: 2px solid app-variables.$focus-color;
+    outline: 2px solid app-variables.$color-focus;
     outline-offset: 2px;
   }
 }
 
-/* Modals style */
+// MODALS
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease-out;
+  transition: opacity app-variables.$duration-slow app-variables.$easing-out;
 }
 
 .fade-enter,
@@ -36,10 +98,10 @@ a {
   opacity: 0;
 }
 
-/* Card */
+// CARDS
 .card {
-  background: #ffffff;
-  border-radius: 4px;
+  background: app-variables.$color-white;
+  border-radius: app-variables.$radius-sm;
   box-shadow: app-variables.$box-shadow;
   padding: 1rem;
   width: auto;
@@ -49,7 +111,14 @@ a {
   gap: 1rem;
 }
 
-/* Section */
+.card-bordered {
+  border-radius: app-variables.$radius-lg;
+  border: 1px solid app-variables.$color-base-10;
+  background: app-variables.$color-white;
+  box-shadow: app-variables.$box-shadow-card;
+}
+
+// SECTION
 .section {
   margin-top: 0.5rem;
   padding: 0;
@@ -60,24 +129,141 @@ a {
   align-items: center;
 }
 
-/* Select style */
+// SELECT
 .select {
-  color: app-variables.$app-font-color;
+  color: app-variables.$color-text;
   font-family: app-variables.$app-font;
   font-size: 0.9rem;
   background-color: transparent;
   border: 0;
   border-radius: 0;
-  border-bottom: 1px solid app-variables.$secondary-color;
+  border-bottom: 1px solid app-variables.$color-base-20;
   padding: 0;
 
   &:focus-visible {
-    outline: 2px solid app-variables.$focus-color;
+    outline: 2px solid app-variables.$color-focus;
     outline-offset: 2px;
   }
 }
 
-/* OTHERS */
+// BUTTONS
+button {
+  // Reset default button styles
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  border-radius: app-variables.$radius-pill;
+  border: none;
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  padding: 0.25rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+  transition: all app-variables.$duration-base app-variables.$easing-standard;
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid app-variables.$color-focus;
+    outline-offset: 3px;
+  }
+
+  &--disabled,
+  &:disabled {
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &:hover {
+      transform: none;
+      filter: none;
+    }
+  }
+}
+
+// One variant per palette. Tweak the text colors here when the palette
+// changes, keeping >= 4.5:1 contrast against the background.
+//   background: filled button background
+//   color:      filled button text
+//   shade:      main color, used for the hover shadow
+//   outline:    text and border of the --outlined variant (on white)
+$btn-variants: (
+  primary: (
+    background: app-variables.$gradient-primary,
+    color: app-variables.$color-white,
+    shade: app-variables.$color-primary,
+    outline: app-variables.$color-primary-text,
+  ),
+  secondary: (
+    background: app-variables.$gradient-secondary,
+    color: app-variables.$color-white,
+    shade: app-variables.$color-secondary,
+    outline: app-variables.$color-secondary-40,
+  ),
+  accent: (
+    background: app-variables.$gradient-accent,
+    color: app-variables.$color-accent-60,
+    shade: app-variables.$color-accent,
+    outline: app-variables.$color-accent-40,
+  ),
+  base: (
+    background: app-variables.$gradient-base,
+    color: app-variables.$color-white,
+    shade: app-variables.$color-base,
+    outline: app-variables.$color-base-50,
+  ),
+);
+
+@each $name, $variant in $btn-variants {
+  .btn-#{$name} {
+    background: map.get($variant, background);
+    color: map.get($variant, color);
+    box-shadow: 0 4px 6px -1px rgba(map.get($variant, shade), 0.2);
+
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgba(map.get($variant, shade), 0.3);
+    }
+
+    &--outlined {
+      background: transparent;
+      color: map.get($variant, outline);
+      border: 1px solid map.get($variant, outline);
+      box-shadow: none;
+
+      &:hover {
+        background: map.get($variant, background);
+        color: map.get($variant, color);
+        border-color: transparent;
+      }
+    }
+  }
+}
+
+.btn-square {
+  border-radius: app-variables.$radius-sm;
+}
+
+// OTHERS
 .version {
   font-size: 0.6rem;
 }
