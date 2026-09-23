@@ -69,3 +69,24 @@ $margin-paddings-sizes: (
     padding-bottom: $value;
   }
 }
+
+/* Dimensions */
+
+$dimensions-percentage: (
+  "0": 0,
+  "25": 25%,
+  "50": 50%,
+  "75": 75%,
+  "100": 100%,
+  "auto": auto,
+  "fit": fit-content,
+);
+
+@each $size, $value in $dimensions-percentage {
+  .w-#{$size} {
+    width: $value;
+  }
+  .h-#{$size} {
+    height: $value;
+  }
+}

@@ -56,7 +56,6 @@ const count = ref(0);
     data-test="buttoncount"
     type="button"
     class="btn btn-primary btn-square mb-3"
-    :style="{ width: '250px' }"
     @click="count++"
   >
     Increment click count: {{ count }}

@@ -17,7 +17,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-  width: 100%;
+  width: fit-content;
   border-radius: app-variables.$radius-pill;
   border: none;
   min-height: 2.5rem;
