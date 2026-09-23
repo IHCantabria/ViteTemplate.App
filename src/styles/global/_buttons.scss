@@ -1,0 +1,119 @@
+@use "sass:map";
+@use "@/styles/variables" as app-variables;
+
+// BUTTONS
+button {
+  // Reset default button styles
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  border-radius: app-variables.$radius-pill;
+  border: none;
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  padding: 0.25rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+  transition: all app-variables.$duration-base app-variables.$easing-standard;
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid app-variables.$color-focus;
+    outline-offset: 3px;
+  }
+
+  &--disabled,
+  &:disabled {
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &:hover {
+      transform: none;
+      filter: none;
+    }
+  }
+}
+
+// One variant per palette. Tweak the text colors here when the palette
+// changes, keeping >= 4.5:1 contrast against the background.
+//   background: filled button background
+//   color:      filled button text
+//   shade:      main color, used for the hover shadow
+//   outline:    text and border of the --outlined variant (on white)
+$btn-variants: (
+  primary: (
+    background: app-variables.$gradient-primary,
+    color: app-variables.$color-white,
+    shade: app-variables.$color-primary,
+    outline: app-variables.$color-primary-text,
+  ),
+  secondary: (
+    background: app-variables.$gradient-secondary,
+    color: app-variables.$color-white,
+    shade: app-variables.$color-secondary,
+    outline: app-variables.$color-secondary-40,
+  ),
+  accent: (
+    background: app-variables.$gradient-accent,
+    color: app-variables.$color-accent-60,
+    shade: app-variables.$color-accent,
+    outline: app-variables.$color-accent-40,
+  ),
+  base: (
+    background: app-variables.$gradient-base,
+    color: app-variables.$color-white,
+    shade: app-variables.$color-base,
+    outline: app-variables.$color-base-50,
+  ),
+);
+
+@each $name, $variant in $btn-variants {
+  .btn-#{$name} {
+    background: map.get($variant, background);
+    color: map.get($variant, color);
+    box-shadow: 0 4px 6px -1px rgba(map.get($variant, shade), 0.2);
+
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgba(map.get($variant, shade), 0.3);
+    }
+
+    &--outlined {
+      background: transparent;
+      color: map.get($variant, outline);
+      border: 1px solid map.get($variant, outline);
+      box-shadow: none;
+
+      &:hover {
+        background: map.get($variant, background);
+        color: map.get($variant, color);
+        border-color: transparent;
+      }
+    }
+  }
+}
+
+.btn-square {
+  border-radius: app-variables.$radius-sm;
+}

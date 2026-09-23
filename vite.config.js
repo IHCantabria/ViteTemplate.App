@@ -85,12 +85,12 @@ export default defineConfig(({ mode }) => {
       port: 8080,
       // Exits if port is already in use
       strictPort: true,
-      https: false,
+      https: true,
     },
     preview: {
       port: 8080,
       strictPort: true,
-      https: false,
+      https: true,
     },
     build: {
       outDir: dist,
